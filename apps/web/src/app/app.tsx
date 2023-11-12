@@ -1,14 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css'
-
-import NxWelcome from './nx-welcome'
+import { Container } from '@mantine/core';
+import { UiAlert } from './ui/ui-alert/ui-alert';
+import { UiTheme } from './ui/ui-theme/ui-theme';
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="web" />
-    </div>
-  )
+    <UiTheme>
+      <Container py="xl">
+        <UiAlert message={'Hello World'} />
+      </Container>
+    </UiTheme>
+  );
 }
-
-export default App

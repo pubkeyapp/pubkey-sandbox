@@ -5,7 +5,13 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@mantine/core": "^7.2.1",
+    "@mantine/hooks": "^7.2.1",
+    "@mantine/modals": "^7.2.1",
+    "@mantine/notifications": "^7.2.1",
+    "@mantine/nprogress": "^7.2.1",
     "@swc/helpers": "~0.5.2",
+    "@tabler/icons-react": "^2.40.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -36,7 +42,11 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "jsdom": "~22.1.0",
     "nx": "17.1.1",
+    "postcss": "^8.4.31",
+    "postcss-preset-mantine": "^1.11.0",
+    "postcss-simple-vars": "^7.0.1",
     "prettier": "^2.6.2",
+    "tslib": "^2.6.2",
     "typescript": "~5.2.2",
     "vite": "~4.3.9",
     "vitest": "~0.32.0"
