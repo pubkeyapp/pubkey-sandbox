@@ -5,15 +5,24 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@mantine/core": "^7.2.1",
     "@mantine/hooks": "^7.2.1",
     "@mantine/modals": "^7.2.1",
     "@mantine/notifications": "^7.2.1",
     "@mantine/nprogress": "^7.2.1",
+    "@pubkeyapp/wallet-adapter-mantine-ui": "^2.0.1",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-solflare": "^0.6.28",
+    "@solana/web3.js": "^1.87.6",
     "@swc/helpers": "~0.5.2",
     "@tabler/icons-react": "^2.40.0",
+    "@tanstack/react-query": "^5.8.2",
+    "jotai": "^2.5.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@nx/eslint": "17.1.1",
