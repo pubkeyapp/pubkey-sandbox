@@ -12,10 +12,10 @@ const client = new QueryClient();
 
 export function App() {
   return (
-    <QueryClientProvider client={client}>
-      <BrowserRouter>
-        <UiTheme>
-          <ClusterProvider>
+    <ClusterProvider>
+      <QueryClientProvider client={client}>
+        <BrowserRouter>
+          <UiTheme>
             <SolanaWalletProvider>
               <Suspense fallback={<Loader />}>
                 <AppLayout>
@@ -23,9 +23,9 @@ export function App() {
                 </AppLayout>
               </Suspense>
             </SolanaWalletProvider>
-          </ClusterProvider>
-        </UiTheme>
-      </BrowserRouter>
-    </QueryClientProvider>
+          </UiTheme>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ClusterProvider>
   );
 }

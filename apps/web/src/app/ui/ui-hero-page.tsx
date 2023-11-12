@@ -6,16 +6,24 @@ export function UiHeroPage({
   description,
   children,
 }: {
-  title?: string;
-  description?: string;
+  title?: ReactNode;
+  description?: ReactNode;
   children?: ReactNode;
 }) {
   return (
     <Box py="xl">
       <Box ta="center">
         <Container className="max-w-2xl">
-          {title ? <Title order={1}>{title}</Title> : null}
-          {description ? <Text c="dimmed">{description}</Text> : null}
+          {title && typeof title === 'string' ? (
+            <Title order={1}>{title}</Title>
+          ) : (
+            title
+          )}
+          {description && typeof description === 'string' ? (
+            <Text c="dimmed">{description}</Text>
+          ) : (
+            description
+          )}
           {children}
         </Container>
       </Box>

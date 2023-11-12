@@ -1,12 +1,15 @@
-import { showNotification } from '@mantine/notifications';
 import {
   Connection,
+  LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
   TransactionMessage,
   TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
+import { UiExplorerLink } from '../ui/ui-explorer/ui-explorer-link';
+import { notifyError, notifySuccess } from '../ui/ui-notify/ui-notify';
+import { ellipsify } from './ellipsify';
 
 export async function sendSolTransaction({
   publicKey,
@@ -31,7 +34,7 @@ export async function sendSolTransaction({
       SystemProgram.transfer({
         fromPubkey: publicKey,
         toPubkey: destination,
-        lamports: amount,
+        lamports: amount * LAMPORTS_PER_SOL,
       }),
     ];
 
@@ -58,18 +61,21 @@ export async function sendSolTransaction({
     );
 
     console.log(signature);
-    showNotification({
-      color: 'green',
-      message: 'Transaction successful! ' + signature,
+    notifySuccess({
+      message: (
+        <UiExplorerLink label={ellipsify(signature)} path={`tx/${signature}`}>
+          Sent {amount} SOL to {ellipsify(destination.toBase58())}.
+        </UiExplorerLink>
+      ),
     });
+
     return signature;
   } catch (error: unknown) {
-    showNotification({
-      color: 'red',
+    console.log('error', `Transaction failed! ${error}`, signature);
+    notifyError({
       title: `Transaction failed!`,
       message: error?.toString(),
     });
-    console.log('error', `Transaction failed! ${error}`, signature);
     return;
   }
 }

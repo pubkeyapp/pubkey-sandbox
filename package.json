@@ -19,10 +19,12 @@
     "@swc/helpers": "~0.5.2",
     "@tabler/icons-react": "^2.40.0",
     "@tanstack/react-query": "^5.8.2",
+    "clsx": "^2.0.0",
     "jotai": "^2.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.18.0",
+    "timeago-react": "^3.0.6"
   },
   "devDependencies": {
     "@nx/eslint": "17.1.1",

@@ -5,6 +5,7 @@ import { IconChevronDown } from '@tabler/icons-react';
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classes from './ui-header.module.css';
+import { UiThemeToggle } from '../ui-theme-toggle/ui-theme-toggle';
 
 export interface UiHeaderLink {
   link: string;
@@ -78,6 +79,7 @@ export function UiHeader({
           </Group>
           <Group>
             <div className={classes.profile}>{profile}</div>
+            <UiThemeToggle />
             <Burger
               opened={opened}
               onClick={toggle}

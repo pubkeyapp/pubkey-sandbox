@@ -6,6 +6,5 @@ export function useGetVersion() {
   return useQuery({
     queryKey: ['version', connection.rpcEndpoint],
     queryFn: () => connection.getVersion(),
-    retry: false,
   });
 }
