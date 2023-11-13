@@ -2,13 +2,13 @@ import { Flex, Group, Stack, Text } from '@mantine/core';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
-import { ellipsify } from './ellipsify';
-import { SolanaAirdropSol } from './solana-airdrop-sol';
-import { SolanaGetBalance } from './solana-get-balance';
-import { SolanaReceiveSolButton } from './solana-receive-sol-button';
-import { SolanaSendSolButton } from './solana-send-sol-button';
+import { ellipsify } from '../solana/ellipsify';
+import { SolanaAirdropSol } from '../solana/solana-airdrop-sol';
+import { SolanaGetBalance } from '../solana/solana-get-balance';
+import { SolanaReceiveSolButton } from '../solana/solana-receive-sol-button';
+import { SolanaSendSolButton } from '../solana/solana-send-sol-button';
 
-export function SolanaWalletHeader({ publicKey }: { publicKey: PublicKey }) {
+export function WalletHeader({ publicKey }: { publicKey: PublicKey }) {
   const { connection } = useConnection();
   return (
     <Flex align="center" justify="space-between">

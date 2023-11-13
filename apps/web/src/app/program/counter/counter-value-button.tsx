@@ -1,15 +1,12 @@
 import { Button } from '@mantine/core';
-import { PublicKey } from '@solana/web3.js';
 import { notifySignatureLink } from '../../ui/ui-explorer/ui-explorer-link';
 import { notifyWarning } from '../../ui/ui-notify/ui-notify';
-import {
-  useCounterFetch,
-  useCounterSet,
-} from './use-counter-program-operations';
+import { useCounterFetch } from './use-counter-fetch';
+import { useCounterSet } from './use-counter-set';
 
-export function CounterValueButton({ counter }: { counter: PublicKey }) {
-  const counterQuery = useCounterFetch({ counter });
-  const counterSet = useCounterSet({ counter });
+export function CounterValueButton() {
+  const counterQuery = useCounterFetch();
+  const counterSet = useCounterSet();
 
   const value = counterQuery.data?.count.toString() ?? '0';
 

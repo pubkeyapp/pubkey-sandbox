@@ -3,9 +3,9 @@ import { CounterIDL } from '@pubkey-sandbox/anchor';
 import { IDL as EpPlexIDL } from './epplex/ephemeralityTypes';
 
 export interface ProgramMeta {
-  id: string;
-  app: 'counter' | 'ephemerality' | 'none';
   account: string;
+  app: 'counter' | 'ephemerality' | 'none';
+  id: string;
   idl: Idl;
 }
 export type ProgramApps = ProgramMeta['app'];
@@ -14,7 +14,7 @@ export function usePrograms(): ProgramMeta[] {
 }
 
 const counterMeta: ProgramMeta = {
-  account: 'CouTv1Zs5BKfEvnxQsvPYEHPY8DYfcnWNWwfUWVSobV',
+  account: 'coUntYMoMmoSgGKSdMbkbLWmmEY6Rwd5U4tKfigWQrX',
   id: 'counter',
   app: 'counter',
   idl: CounterIDL,

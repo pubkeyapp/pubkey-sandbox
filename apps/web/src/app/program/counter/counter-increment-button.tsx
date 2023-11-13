@@ -1,16 +1,11 @@
 import { Button } from '@mantine/core';
-import { PublicKey } from '@solana/web3.js';
 import { notifySignatureLink } from '../../ui/ui-explorer/ui-explorer-link';
-import { useCounterIncrement } from './use-counter-program-operations';
+import { useCounterFetch } from './use-counter-fetch';
+import { useCounterIncrement } from './use-counter-increment';
 
-export function CounterIncrementButton({
-  counter,
-  refresh,
-}: {
-  counter: PublicKey;
-  refresh: () => Promise<unknown> | unknown;
-}) {
-  const counterIncrement = useCounterIncrement({ counter });
+export function CounterIncrementButton() {
+  const counterIncrement = useCounterIncrement();
+  const counterQuery = useCounterFetch();
 
   return (
     <Button
@@ -19,7 +14,7 @@ export function CounterIncrementButton({
       onClick={() =>
         counterIncrement.mutateAsync().then((signature) => {
           notifySignatureLink({ signature });
-          return refresh();
+          return counterQuery.refetch();
         })
       }
     >

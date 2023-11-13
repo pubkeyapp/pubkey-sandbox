@@ -11,17 +11,16 @@ import { Keypair } from '@solana/web3.js';
 import { ellipsify } from '../../solana/ellipsify';
 import { UiExplorerLink } from '../../ui/ui-explorer/ui-explorer-link';
 import { notifySuccess } from '../../ui/ui-notify/ui-notify';
+import { CounterProgramAccountProvider } from './counter-program-account-provider';
 import { ProgramCounterAccount } from './program-counter-account';
-import {
-  useCounterFetchAll,
-  useCounterInitialize,
-} from './use-counter-program-operations';
+import { useCounterFetchAll } from './use-counter-fetch-all';
+import { useCounterInitialize } from './use-counter-initialize';
 
 export function ProgramCounterList() {
-  const allAccountsQuery = useCounterFetchAll();
-  const counterInitialize = useCounterInitialize();
+  const fetchAllQuery = useCounterFetchAll();
+  const initializeQuery = useCounterInitialize();
 
-  return allAccountsQuery.isLoading ? (
+  return fetchAllQuery.isLoading ? (
     <Container>
       <p>Loading...</p>
     </Container>
@@ -30,7 +29,7 @@ export function ProgramCounterList() {
       <Group justify={'space-between'}>
         <Button
           onClick={() =>
-            counterInitialize
+            initializeQuery
               .mutateAsync({ keypair: Keypair.generate() })
               .then((signature) => {
                 notifySuccess({
@@ -43,27 +42,29 @@ export function ProgramCounterList() {
                     </UiExplorerLink>
                   ),
                 });
-                return allAccountsQuery.refetch();
+                return fetchAllQuery.refetch();
               })
           }
-          disabled={counterInitialize.isPending}
+          disabled={initializeQuery.isPending}
         >
           Create
         </Button>
         <Group>
           <Button
             variant="light"
-            onClick={() => allAccountsQuery.refetch()}
-            loading={allAccountsQuery.isLoading || allAccountsQuery.isFetching}
+            onClick={() => fetchAllQuery.refetch()}
+            loading={fetchAllQuery.isLoading || fetchAllQuery.isFetching}
           >
             Refresh
           </Button>
         </Group>
       </Group>
-      {allAccountsQuery.data?.length ? (
-        allAccountsQuery.data.map((account) => (
+      {fetchAllQuery.data?.length ? (
+        fetchAllQuery.data.map((account) => (
           <Card withBorder key={account.publicKey.toBase58()}>
-            <ProgramCounterAccount account={account} />
+            <CounterProgramAccountProvider account={account}>
+              <ProgramCounterAccount />
+            </CounterProgramAccountProvider>
           </Card>
         ))
       ) : (

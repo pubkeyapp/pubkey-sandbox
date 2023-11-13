@@ -1,21 +1,34 @@
 import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
-import { sendSolTransaction } from './send-sol-transaction';
 
-export function useTransferSol({
+import { sendTokenTransaction } from './send-token-transaction';
+
+export function useTransferToken({
   connection,
-  publicKey,
+  account,
+  accountData,
+  accountOwner,
   sendTransaction,
+  tokenProgramId,
 }: {
   connection: Connection;
-  publicKey: PublicKey;
+  account: PublicKey;
+  accountData: {
+    info: {
+      mint: string;
+      owner: string;
+      tokenAmount: { decimals: number };
+    };
+  };
+  accountOwner: PublicKey;
   sendTransaction: (
     transaction: VersionedTransaction,
     connection: Connection
   ) => Promise<string>;
+  tokenProgramId: PublicKey;
 }) {
   return useMutation({
-    mutationKey: ['transfer-sol'],
+    mutationKey: ['transfer-token'],
     mutationFn: async ({
       destination,
       amount,
@@ -23,12 +36,15 @@ export function useTransferSol({
       amount: number;
       destination: string;
     }) =>
-      sendSolTransaction({
-        publicKey,
+      sendTokenTransaction({
+        account: new PublicKey(account.toString()),
+        accountData,
+        accountOwner: new PublicKey(accountOwner.toString()),
         destination: new PublicKey(destination),
         amount,
         connection,
         sendTransaction,
+        tokenProgramId,
       }),
   });
 }

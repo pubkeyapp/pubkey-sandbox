@@ -1,4 +1,3 @@
-import { ProgramAccount } from '@coral-xyz/anchor';
 import { Group, Stack } from '@mantine/core';
 import { ellipsify } from '../../solana/ellipsify';
 import { UiDebugModal } from '../../ui/ui-debug-modal/ui-debug-modal';
@@ -6,22 +5,14 @@ import { UiExplorer } from '../../ui/ui-explorer/ui-explorer';
 import { CounterCloseButton } from './counter-close-button';
 import { CounterDecrementButton } from './counter-decrement-button';
 import { CounterIncrementButton } from './counter-increment-button';
+import { useCounterProgramAccount } from './counter-program-account-provider';
 import { CounterValueButton } from './counter-value-button';
-import {
-  useCounterFetch,
-  useCounterFetchAll,
-} from './use-counter-program-operations';
 
-export function ProgramCounterAccount({
-  account,
-}: {
-  account: ProgramAccount<{ count: number }>;
-}) {
-  const allAccountsQuery = useCounterFetchAll();
-  const counterQuery = useCounterFetch({ counter: account.publicKey });
+export function ProgramCounterAccount() {
+  const { account } = useCounterProgramAccount();
 
   return (
-    <Stack key={account.publicKey.toBase58()}>
+    <Stack>
       <Group justify="space-between">
         <Group gap={2}>
           <UiExplorer
@@ -32,22 +23,13 @@ export function ProgramCounterAccount({
           />
           <UiDebugModal data={account} />
         </Group>
-        <CounterCloseButton
-          counter={account.publicKey}
-          refresh={() => allAccountsQuery.refetch()}
-        />
+        <CounterCloseButton />
       </Group>
       <Group justify="center">
         <Group gap="xs">
-          <CounterDecrementButton
-            counter={account.publicKey}
-            refresh={() => counterQuery.refetch()}
-          />
-          <CounterValueButton counter={account.publicKey} />
-          <CounterIncrementButton
-            counter={account.publicKey}
-            refresh={() => counterQuery.refetch()}
-          />
+          <CounterDecrementButton />
+          <CounterValueButton />
+          <CounterIncrementButton />
         </Group>
       </Group>
     </Stack>

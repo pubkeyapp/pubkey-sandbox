@@ -3,13 +3,13 @@ import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { UiHeroPage } from '../ui/ui-hero-page';
-import { ellipsify } from './ellipsify';
-import { SolanaAirdropSol } from './solana-airdrop-sol';
-import { SolanaGetBalance } from './solana-get-balance';
-import { SolanaReceiveSolButton } from './solana-receive-sol-button';
-import { SolanaSendSolButton } from './solana-send-sol-button';
+import { ellipsify } from '../solana/ellipsify';
+import { SolanaAirdropSol } from '../solana/solana-airdrop-sol';
+import { SolanaGetBalance } from '../solana/solana-get-balance';
+import { SolanaReceiveSolButton } from '../solana/solana-receive-sol-button';
+import { SolanaSendSolButton } from '../solana/solana-send-sol-button';
 
-export function SolanaWalletHero({ publicKey }: { publicKey: PublicKey }) {
+export function WalletHero({ publicKey }: { publicKey: PublicKey }) {
   const { connection } = useConnection();
   return (
     <UiHeroPage
