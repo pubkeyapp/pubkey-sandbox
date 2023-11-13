@@ -8,9 +8,8 @@ import { UiHeader, UiHeaderLink } from './ui/ui-header/ui-header';
 
 export function AppLayout({ children }: { children: ReactNode }) {
   const links: UiHeaderLink[] = [
-    { label: 'Home', link: '/home' },
+    { label: 'Programs', link: '/programs' },
     { label: 'Wallet', link: '/wallet' },
-    { label: 'Clusters', link: '/clusters' },
   ];
 
   return (

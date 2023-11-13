@@ -12,7 +12,7 @@ export function ClusterUiTable({
   const rows = (clusters ?? []).map((item) => (
     <Table.Tr key={item.name}>
       <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.network ?? 'none'}</Table.Td>
+      <Table.Td>{item.network ?? 'custom'}</Table.Td>
       <Table.Td>{item.endpoint}</Table.Td>
       <Table.Td>
         <Group gap="xs">
