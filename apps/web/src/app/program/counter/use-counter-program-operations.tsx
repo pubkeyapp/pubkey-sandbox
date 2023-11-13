@@ -1,11 +1,11 @@
-import { Program } from '@coral-xyz/anchor';
+import { BN, Program } from '@coral-xyz/anchor';
 import { CounterIDL } from '@pubkey-sandbox/anchor';
 import { Keypair, PublicKey } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAnchorProvider } from '../use-anchor-provider';
 
 export const CounterProgramID = new PublicKey(
-  'GR9woxHzqMaDMxfDKatoTp2TbGgwTAanEifwEYN6EQov'
+  'CouTv1Zs5BKfEvnxQsvPYEHPY8DYfcnWNWwfUWVSobV'
 );
 
 export function useCounterFetchAll() {
@@ -35,6 +35,38 @@ export function useCounterIncrement({ counter }: { counter: PublicKey }) {
   return useMutation({
     mutationKey: ['counter', 'increment', { counter }],
     mutationFn: () => program.methods.increment().accounts({ counter }).rpc(),
+  });
+}
+
+export function useCounterDecrement({ counter }: { counter: PublicKey }) {
+  const provider = useAnchorProvider();
+  const program = new Program(CounterIDL, CounterProgramID, provider);
+
+  return useMutation({
+    mutationKey: ['counter', 'decrement', { counter }],
+    mutationFn: () => program.methods.decrement().accounts({ counter }).rpc(),
+  });
+}
+
+export function useCounterClose({ counter }: { counter: PublicKey }) {
+  const provider = useAnchorProvider();
+  const program = new Program(CounterIDL, CounterProgramID, provider);
+
+  return useMutation({
+    mutationKey: ['counter', 'close', { counter }],
+    mutationFn: () =>
+      program.methods.closeCounter().accounts({ counter }).rpc(),
+  });
+}
+
+export function useCounterSet({ counter }: { counter: PublicKey }) {
+  const provider = useAnchorProvider();
+  const program = new Program(CounterIDL, CounterProgramID, provider);
+
+  return useMutation({
+    mutationKey: ['counter', 'decrement', { counter }],
+    mutationFn: (value: number) =>
+      program.methods.set(new BN(value)).accounts({ counter }).rpc(),
   });
 }
 export function useCounterInitialize() {

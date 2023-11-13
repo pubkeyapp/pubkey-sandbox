@@ -3,6 +3,44 @@ export type Counter = {
   "name": "counter",
   "instructions": [
     {
+      "name": "closeCounter",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "decrement",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "increment",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initializeCounter",
       "accounts": [
         {
@@ -24,7 +62,7 @@ export type Counter = {
       "args": []
     },
     {
-      "name": "increment",
+      "name": "set",
       "accounts": [
         {
           "name": "counter",
@@ -32,7 +70,12 @@ export type Counter = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "value",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -56,6 +99,44 @@ export const IDL: Counter = {
   "name": "counter",
   "instructions": [
     {
+      "name": "closeCounter",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "decrement",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "increment",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initializeCounter",
       "accounts": [
         {
@@ -77,7 +158,7 @@ export const IDL: Counter = {
       "args": []
     },
     {
-      "name": "increment",
+      "name": "set",
       "accounts": [
         {
           "name": "counter",
@@ -85,7 +166,12 @@ export const IDL: Counter = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "value",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [

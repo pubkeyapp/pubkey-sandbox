@@ -32,3 +32,16 @@ export function notifyError({
     message,
   });
 }
+
+export function notifyWarning({
+  title = 'Warning',
+  message,
+  ...props
+}: NotificationData) {
+  return notify({
+    color: 'yellow',
+    ...props,
+    title,
+    message,
+  });
+}

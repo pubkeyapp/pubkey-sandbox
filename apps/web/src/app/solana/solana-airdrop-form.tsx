@@ -5,6 +5,7 @@ import { useCluster } from '../cluster/cluster-provider';
 import { UiExplorerLink } from '../ui/ui-explorer/ui-explorer-link';
 import { notifySuccess } from '../ui/ui-notify/ui-notify';
 import { ellipsify } from './ellipsify';
+import { useGetBalance } from './use-get-balance';
 import { useRequestAirdrop } from './use-request-airdrop';
 
 export function SolanaAirdropForm({
@@ -18,6 +19,8 @@ export function SolanaAirdropForm({
   const [amount, setAmount] = useState<number>(
     ['devnet', 'testnet'].includes(cluster?.network ?? '') ? 2 : 100
   );
+
+  const query = useGetBalance({ connection, publicKey });
   const [destination, setDestination] = useState<string>(publicKey.toString());
   const requestAirdrop = useRequestAirdrop({ connection });
 
@@ -46,7 +49,7 @@ export function SolanaAirdropForm({
                 amount,
                 destination,
               })
-              .then((signature) => {
+              .then(async (signature) => {
                 notifySuccess({
                   title: 'Airdrop Successful',
                   message: (
@@ -58,6 +61,7 @@ export function SolanaAirdropForm({
                     </UiExplorerLink>
                   ),
                 });
+                await query.refetch();
               });
           }}
         >

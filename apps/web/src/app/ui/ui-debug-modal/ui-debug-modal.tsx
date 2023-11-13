@@ -21,12 +21,14 @@ export function handleDebugModalClick({
 export function UiDebugModal({
   data,
   title,
+  tooltip = 'Show debug data',
 }: {
   data: string | unknown;
   title?: string;
+  tooltip?: string;
 }) {
   return (
-    <Tooltip label="Show debug data" position="right" withArrow>
+    <Tooltip label={tooltip} position="right" withArrow>
       <ActionIcon
         color="brand"
         variant="subtle"

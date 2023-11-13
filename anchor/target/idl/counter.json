@@ -3,6 +3,44 @@
   "name": "counter",
   "instructions": [
     {
+      "name": "closeCounter",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "decrement",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "increment",
+      "accounts": [
+        {
+          "name": "counter",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initializeCounter",
       "accounts": [
         {
@@ -24,7 +62,7 @@
       "args": []
     },
     {
-      "name": "increment",
+      "name": "set",
       "accounts": [
         {
           "name": "counter",
@@ -32,7 +70,12 @@
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "value",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -50,6 +93,6 @@
     }
   ],
   "metadata": {
-    "address": "GR9woxHzqMaDMxfDKatoTp2TbGgwTAanEifwEYN6EQov"
+    "address": "CouTv1Zs5BKfEvnxQsvPYEHPY8DYfcnWNWwfUWVSobV"
   }
 }

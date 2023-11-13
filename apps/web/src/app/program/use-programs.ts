@@ -14,7 +14,7 @@ export function usePrograms(): ProgramMeta[] {
 }
 
 const counterMeta: ProgramMeta = {
-  account: 'GR9woxHzqMaDMxfDKatoTp2TbGgwTAanEifwEYN6EQov',
+  account: 'CouTv1Zs5BKfEvnxQsvPYEHPY8DYfcnWNWwfUWVSobV',
   id: 'counter',
   app: 'counter',
   idl: CounterIDL,

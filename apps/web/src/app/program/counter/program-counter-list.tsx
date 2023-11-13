@@ -1,4 +1,12 @@
-import { Box, Button, Card, Container, Group, Stack } from '@mantine/core';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Container,
+  Group,
+  Stack,
+} from '@mantine/core';
 import { Keypair } from '@solana/web3.js';
 import { ellipsify } from '../../solana/ellipsify';
 import { UiExplorerLink } from '../../ui/ui-explorer/ui-explorer-link';
@@ -19,42 +27,39 @@ export function ProgramCounterList() {
     </Container>
   ) : (
     <Stack>
-      <Card withBorder>
-        <Group justify={'space-between'}>
+      <Group justify={'space-between'}>
+        <Button
+          onClick={() =>
+            counterInitialize
+              .mutateAsync({ keypair: Keypair.generate() })
+              .then((signature) => {
+                notifySuccess({
+                  message: (
+                    <UiExplorerLink
+                      label={ellipsify(signature)}
+                      path={`tx/${signature}`}
+                    >
+                      View transaction {ellipsify(signature)}.
+                    </UiExplorerLink>
+                  ),
+                });
+                return allAccountsQuery.refetch();
+              })
+          }
+          disabled={counterInitialize.isPending}
+        >
+          Create
+        </Button>
+        <Group>
           <Button
-            onClick={() =>
-              counterInitialize
-                .mutateAsync({ keypair: Keypair.generate() })
-                .then((signature) => {
-                  notifySuccess({
-                    message: (
-                      <UiExplorerLink
-                        label={ellipsify(signature)}
-                        path={`tx/${signature}`}
-                      >
-                        View transaction {ellipsify(signature)}.
-                      </UiExplorerLink>
-                    ),
-                  });
-                  return allAccountsQuery.refetch();
-                })
-            }
-            disabled={counterInitialize.isPending}
+            variant="light"
+            onClick={() => allAccountsQuery.refetch()}
+            loading={allAccountsQuery.isLoading || allAccountsQuery.isFetching}
           >
-            Create Counter
+            Refresh
           </Button>
-          <Group>
-            <Button
-              onClick={() => allAccountsQuery.refetch()}
-              loading={
-                allAccountsQuery.isLoading || allAccountsQuery.isFetching
-              }
-            >
-              Refresh
-            </Button>
-          </Group>
         </Group>
-      </Card>
+      </Group>
       {allAccountsQuery.data?.length ? (
         allAccountsQuery.data.map((account) => (
           <Card withBorder key={account.publicKey.toBase58()}>
@@ -63,7 +68,9 @@ export function ProgramCounterList() {
         ))
       ) : (
         <Box>
-          <p>No accounts found.</p>
+          <Alert variant="light" color="blue" title="No accounts found">
+            Create an account to get started.
+          </Alert>
         </Box>
       )}
     </Stack>

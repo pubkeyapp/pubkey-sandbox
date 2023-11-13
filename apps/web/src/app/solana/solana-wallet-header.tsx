@@ -1,4 +1,5 @@
 import { Flex, Group, Stack, Text } from '@mantine/core';
+import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { ellipsify } from './ellipsify';
@@ -8,11 +9,12 @@ import { SolanaReceiveSolButton } from './solana-receive-sol-button';
 import { SolanaSendSolButton } from './solana-send-sol-button';
 
 export function SolanaWalletHeader({ publicKey }: { publicKey: PublicKey }) {
+  const { connection } = useConnection();
   return (
     <Flex align="center" justify="space-between">
       <Stack gap={0}>
         <Text size="xl" fw="bold">
-          <SolanaGetBalance publicKey={publicKey} />
+          <SolanaGetBalance connection={connection} publicKey={publicKey} />
         </Text>
         <Group gap={2}>
           <UiExplorer

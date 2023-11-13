@@ -1,9 +1,13 @@
-import { useConnection } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { useQuery } from '@tanstack/react-query';
 
-export function useGetBalance({ publicKey }: { publicKey: PublicKey }) {
-  const { connection } = useConnection();
+export function useGetBalance({
+  connection,
+  publicKey,
+}: {
+  connection: Connection;
+  publicKey: PublicKey;
+}) {
   return useQuery({
     queryKey: [
       'getBalance',

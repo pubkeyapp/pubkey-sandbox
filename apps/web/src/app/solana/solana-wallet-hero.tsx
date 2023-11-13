@@ -1,4 +1,5 @@
 import { Group, Stack, Title } from '@mantine/core';
+import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { UiHeroPage } from '../ui/ui-hero-page';
@@ -9,10 +10,13 @@ import { SolanaReceiveSolButton } from './solana-receive-sol-button';
 import { SolanaSendSolButton } from './solana-send-sol-button';
 
 export function SolanaWalletHero({ publicKey }: { publicKey: PublicKey }) {
+  const { connection } = useConnection();
   return (
     <UiHeroPage
       title={
-        <Title order={1}>{<SolanaGetBalance publicKey={publicKey} />}</Title>
+        <Title order={1}>
+          {<SolanaGetBalance connection={connection} publicKey={publicKey} />}
+        </Title>
       }
       description={
         <Stack>
