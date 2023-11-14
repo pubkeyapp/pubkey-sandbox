@@ -4,11 +4,11 @@
   "sourceRoot": "anchor/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "anchor": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "anchor",
-        "commands": ["anchor build"],
+        "command": "anchor",
         "parallel": false
       }
     },

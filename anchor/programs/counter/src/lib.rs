@@ -2,7 +2,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("coUntYMoMmoSgGKSdMbkbLWmmEY6Rwd5U4tKfigWQrX");
+declare_id!("CounNZdmsQmWh7uVngV9FXW2dZ6zAgbJyYsvBpqbykg");
 
 #[program]
 pub mod counter {
@@ -11,6 +11,7 @@ pub mod counter {
     pub fn close_counter(_ctx: Context<CloseCounter>) -> Result<()> {
         Ok(())
     }
+
     pub fn decrement(ctx: Context<Update>) -> Result<()> {
         ctx.accounts.counter.count = ctx.accounts.counter.count.checked_sub(1).unwrap();
         Ok(())
@@ -25,7 +26,7 @@ pub mod counter {
         Ok(())
     }
 
-    pub fn set(ctx: Context<Update>, value: u64) -> Result<()> {
+    pub fn set(ctx: Context<Update>, value: u8) -> Result<()> {
         ctx.accounts.counter.count = value.clone();
         Ok(())
     }
@@ -65,5 +66,5 @@ pub struct Update<'info> {
 #[account]
 #[derive(InitSpace)]
 pub struct Counter {
-    count: u64,
+    count: u8,
 }

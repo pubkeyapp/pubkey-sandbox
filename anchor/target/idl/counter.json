@@ -73,7 +73,7 @@
       "args": [
         {
           "name": "value",
-          "type": "u64"
+          "type": "u8"
         }
       ]
     }
@@ -86,13 +86,10 @@
         "fields": [
           {
             "name": "count",
-            "type": "u64"
+            "type": "u8"
           }
         ]
       }
     }
-  ],
-  "metadata": {
-    "address": "coUntYMoMmoSgGKSdMbkbLWmmEY6Rwd5U4tKfigWQrX"
-  }
+  ]
 }

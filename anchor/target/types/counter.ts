@@ -73,7 +73,7 @@ export type Counter = {
       "args": [
         {
           "name": "value",
-          "type": "u64"
+          "type": "u8"
         }
       ]
     }
@@ -86,7 +86,7 @@ export type Counter = {
         "fields": [
           {
             "name": "count",
-            "type": "u64"
+            "type": "u8"
           }
         ]
       }
@@ -169,7 +169,7 @@ export const IDL: Counter = {
       "args": [
         {
           "name": "value",
-          "type": "u64"
+          "type": "u8"
         }
       ]
     }
@@ -182,7 +182,7 @@ export const IDL: Counter = {
         "fields": [
           {
             "name": "count",
-            "type": "u64"
+            "type": "u8"
           }
         ]
       }
