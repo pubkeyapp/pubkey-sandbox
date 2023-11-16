@@ -11,7 +11,7 @@ export function UiExplorerLink({
 }: {
   path: string;
   label: string;
-  children: ReactNode;
+  children?: ReactNode;
 }) {
   return (
     <div>

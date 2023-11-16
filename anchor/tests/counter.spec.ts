@@ -27,7 +27,7 @@ describe('counter', () => {
       counterKeypair.publicKey
     );
 
-    expect(currentCount.count.toNumber()).toEqual(0);
+    expect(currentCount.count).toEqual(0);
   });
 
   it('Increment Counter', async () => {
@@ -40,7 +40,7 @@ describe('counter', () => {
       counterKeypair.publicKey
     );
 
-    expect(currentCount.count.toNumber()).toEqual(1);
+    expect(currentCount.count).toEqual(1);
   });
 
   it('Increment Counter Again', async () => {
@@ -53,7 +53,7 @@ describe('counter', () => {
       counterKeypair.publicKey
     );
 
-    expect(currentCount.count.toNumber()).toEqual(2);
+    expect(currentCount.count).toEqual(2);
   });
 
   it('Decrement Counter', async () => {
@@ -66,7 +66,7 @@ describe('counter', () => {
       counterKeypair.publicKey
     );
 
-    expect(currentCount.count.toNumber()).toEqual(1);
+    expect(currentCount.count).toEqual(1);
   });
 
   it('Set counter value', async () => {
@@ -79,7 +79,7 @@ describe('counter', () => {
       counterKeypair.publicKey
     );
 
-    expect(currentCount.count.toNumber()).toEqual(42);
+    expect(currentCount.count).toEqual(42);
   });
 
   it('Set close the counter account', async () => {

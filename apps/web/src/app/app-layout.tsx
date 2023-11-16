@@ -1,7 +1,7 @@
 import { Box, Container, Flex, Group } from '@mantine/core';
 import { WalletMultiButton } from '@pubkeyapp/wallet-adapter-mantine-ui';
 import { ReactNode } from 'react';
-import { ClusterUiSelect } from './cluster/cluster-ui-select';
+import { ClusterUiSelect } from './cluster/cluster-ui';
 import { SolanaClusterVersion } from './solana/solana-cluster-version';
 import { UiFooter } from './ui/ui-footer/ui-footer';
 import { UiHeader, UiHeaderLink } from './ui/ui-header/ui-header';
@@ -9,6 +9,8 @@ import { UiHeader, UiHeaderLink } from './ui/ui-header/ui-header';
 export function AppLayout({ children }: { children: ReactNode }) {
   const links: UiHeaderLink[] = [
     { label: 'Programs', link: '/programs' },
+    { label: 'Keypairs', link: '/keypairs' },
+    { label: 'Token', link: '/token' },
     { label: 'Wallet', link: '/wallet' },
   ];
 
@@ -18,7 +20,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         links={links}
         profile={
           <Group>
-            <WalletMultiButton />
+            <WalletMultiButton variant="light" />
             <ClusterUiSelect />
           </Group>
         }

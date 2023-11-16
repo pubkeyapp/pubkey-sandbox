@@ -1,12 +1,13 @@
 [package]
-name = "counter"
+name = "chat"
 version = "0.1.0"
 description = "Created with Anchor"
+rust-version = "1.60"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "counter"
+name = "chat"
 
 [features]
 no-entrypoint = []
@@ -16,3 +17,4 @@ default = []
 
 [dependencies]
 anchor-lang = "0.29.0"
+bytemuck = {version = "1.4.0", features = ["derive", "min_const_generics"]}

@@ -53,6 +53,7 @@ export interface ClusterProviderContext {
   clusters: Cluster[];
   addCluster: (cluster: Cluster) => void;
   deleteCluster: (cluster: Cluster) => void;
+  importCluster: (url: string) => void;
   setCluster: (cluster: Cluster) => void;
   getExplorerUrl(path: string): string;
 }
@@ -61,6 +62,27 @@ const Context = createContext<ClusterProviderContext>(
   {} as ClusterProviderContext
 );
 
+async function importCluster(url: string): Promise<Cluster[]> {
+  return fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
+        return data.map((item) => {
+          const { name, endpoint, network } = item;
+          return {
+            name,
+            endpoint,
+            network: network as WalletAdapterNetwork,
+          };
+        });
+      }
+      return [];
+    })
+    .catch((err) => {
+      console.error(err);
+      return [];
+    });
+}
 export function ClusterProvider({ children }: { children: ReactNode }) {
   const cluster = useAtomValue(activeClusterAtom);
   const clusters = useAtomValue(activeClustersAtom);
@@ -69,7 +91,7 @@ export function ClusterProvider({ children }: { children: ReactNode }) {
 
   const value: ClusterProviderContext = {
     cluster,
-    clusters,
+    clusters: clusters.sort((a, b) => a.name.localeCompare(b.name)),
     addCluster: (cluster: Cluster) => {
       setClusters([...clusters, cluster]);
     },
@@ -77,6 +99,15 @@ export function ClusterProvider({ children }: { children: ReactNode }) {
       setClusters(clusters.filter((item) => item.name !== cluster.name));
     },
     setCluster: (cluster: Cluster) => setCluster(cluster),
+    importCluster: (url: string) => {
+      importCluster(url).then((newClusters) => {
+        setClusters(
+          clusters
+            .filter((item) => !newClusters.find((c) => c.name === item.name))
+            .concat(newClusters)
+        );
+      });
+    },
     getExplorerUrl: (path: string) =>
       `https://explorer.solana.com/${path}${getClusterUrlParam(cluster)}`,
   };
