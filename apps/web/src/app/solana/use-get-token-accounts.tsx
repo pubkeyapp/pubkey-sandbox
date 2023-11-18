@@ -1,9 +1,13 @@
 import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
 import { useQuery } from '@tanstack/react-query';
+import { getPublicKey, PublicKeyString } from './get-public-key';
 
-export function useGetTokenAccounts({ publicKey }: { publicKey: PublicKey }) {
+export function useGetTokenAccounts({
+  publicKey,
+}: {
+  publicKey: PublicKeyString;
+}) {
   const { connection } = useConnection();
   return useQuery({
     queryKey: [
@@ -12,10 +16,10 @@ export function useGetTokenAccounts({ publicKey }: { publicKey: PublicKey }) {
     ],
     queryFn: async () => {
       const [tokenAccounts, token2022Accounts] = await Promise.all([
-        connection.getParsedTokenAccountsByOwner(publicKey, {
+        connection.getParsedTokenAccountsByOwner(getPublicKey(publicKey), {
           programId: TOKEN_PROGRAM_ID,
         }),
-        connection.getParsedTokenAccountsByOwner(publicKey, {
+        connection.getParsedTokenAccountsByOwner(getPublicKey(publicKey), {
           programId: TOKEN_2022_PROGRAM_ID,
         }),
       ]);

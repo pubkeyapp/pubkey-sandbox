@@ -1,9 +1,10 @@
 import { Button, Grid, Group, Stack, TextInput } from '@mantine/core';
-import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
+import { Connection, VersionedTransaction } from '@solana/web3.js';
 import { useState } from 'react';
 
 import { UiExplorerButton } from '../ui/ui-explorer/ui-explorer-button';
 import { ellipsify } from './ellipsify';
+import { PublicKeyString } from './get-public-key';
 
 import { useTransferToken } from './use-transfer-token';
 
@@ -15,7 +16,7 @@ export function SolanaTransferTokenForm({
   sendTransaction,
   tokenProgramId,
 }: {
-  account: PublicKey;
+  account: PublicKeyString;
   accountData: {
     info: {
       mint: string;
@@ -23,13 +24,13 @@ export function SolanaTransferTokenForm({
       tokenAmount: { decimals: number };
     };
   };
-  accountOwner: PublicKey;
+  accountOwner: PublicKeyString;
   connection: Connection;
   sendTransaction: (
     transaction: VersionedTransaction,
     connection: Connection
   ) => Promise<string>;
-  tokenProgramId: PublicKey;
+  tokenProgramId: PublicKeyString;
 }) {
   const [amount, setAmount] = useState<number>(0);
   const [destination, setDestination] = useState<string>('');

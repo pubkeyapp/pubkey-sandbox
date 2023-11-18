@@ -1,5 +1,6 @@
-import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
+import { Connection, VersionedTransaction } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
+import { PublicKeyString } from './get-public-key';
 import { sendSolTransaction } from './send-sol-transaction';
 
 export function useTransferSol({
@@ -8,7 +9,7 @@ export function useTransferSol({
   sendTransaction,
 }: {
   connection: Connection;
-  publicKey: PublicKey;
+  publicKey: PublicKeyString;
   sendTransaction: (
     transaction: VersionedTransaction,
     connection: Connection
@@ -25,7 +26,7 @@ export function useTransferSol({
     }) =>
       sendSolTransaction({
         publicKey,
-        destination: new PublicKey(destination),
+        destination,
         amount,
         connection,
         sendTransaction,

@@ -1,14 +1,14 @@
 import { Flex, Group, Stack, Text } from '@mantine/core';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
-import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { ellipsify } from '../solana/ellipsify';
+import { PublicKeyString } from '../solana/get-public-key';
 import { SolanaAirdropSol } from '../solana/solana-airdrop-sol';
 import { SolanaGetBalance } from '../solana/solana-get-balance';
 import { SolanaReceiveSolButton } from '../solana/solana-receive-sol-button';
 import { SolanaSendSolButton } from '../solana/solana-send-sol-button';
+import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 
-export function WalletHeader({ publicKey }: { publicKey: PublicKey }) {
+export function WalletHeader({ publicKey }: { publicKey: PublicKeyString }) {
   const { connection } = useConnection();
   return (
     <Flex align="center" justify="space-between">
@@ -18,9 +18,9 @@ export function WalletHeader({ publicKey }: { publicKey: PublicKey }) {
         </Text>
         <Group gap={2}>
           <UiExplorer
-            label={ellipsify(publicKey.toBase58())}
+            label={ellipsify(publicKey.toString())}
             path={`account/${publicKey}`}
-            copyValue={publicKey.toBase58()}
+            copyValue={publicKey.toString()}
             copyLabel="Copy address"
           />
         </Group>

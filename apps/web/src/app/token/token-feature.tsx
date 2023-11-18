@@ -1,9 +1,9 @@
-import { TokenIndex } from './token-ui';
+import { TokenCreate } from './token-ui';
 
 export default function () {
   return (
     <div>
-      <TokenIndex />
+      <TokenCreate />
     </div>
   );
 }

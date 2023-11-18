@@ -1,6 +1,6 @@
 import { BN, Program } from '@coral-xyz/anchor';
-import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import { TOKEN_2022_PROGRAM_ID } from '@solana/spl-token';
+import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import {
   Keypair,
   PublicKey,
@@ -8,6 +8,7 @@ import {
   SYSVAR_RENT_PUBKEY,
 } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { getPublicKey, PublicKeyString } from '../../solana/get-public-key';
 import { useAnchorProvider } from '../use-anchor-provider';
 import { ProgramMeta } from '../use-programs';
 import { IDL as EpplexIDL } from './ephemeralityTypes';
@@ -20,7 +21,7 @@ export function useEpplexFetchAll({
   const provider = useAnchorProvider();
   const program = new Program(
     EpplexIDL,
-    new PublicKey(programMeta.account),
+    getPublicKey(programMeta.account),
     provider
   );
 
@@ -34,14 +35,17 @@ export function useGetTokenAccounts({
   owner,
   programId,
 }: {
-  owner: PublicKey;
-  programId: PublicKey;
+  owner: PublicKeyString;
+  programId: PublicKeyString;
 }) {
   const { connection } = useConnection();
 
   return useQuery({
     queryKey: ['counter', 'get-token-accounts', { owner }],
-    queryFn: () => connection.getTokenAccountsByOwner(owner, { programId }),
+    queryFn: () =>
+      connection.getTokenAccountsByOwner(getPublicKey(owner), {
+        programId: getPublicKey(programId),
+      }),
   });
 }
 
@@ -54,7 +58,7 @@ export function useEpplexInitialize({
   const provider = useAnchorProvider();
   const program = new Program(
     EpplexIDL,
-    new PublicKey(programMeta.account),
+    getPublicKey(programMeta.account),
     provider
   );
 
@@ -75,7 +79,7 @@ export function useEpplexInitialize({
         })
         .accounts({
           mint: mint.publicKey,
-          programDelegate: new PublicKey(
+          programDelegate: getPublicKey(
             'LNGnWhP1L17aoedd4dyg8RqVAMSA719KaddWF3Nh3Fn'
           ),
           payer: wallet.publicKey,
@@ -92,14 +96,14 @@ export function useEpplexInitialize({
 export function getProgramDelegate({
   programId,
 }: {
-  programId: PublicKey;
+  programId: PublicKeyString;
 }): PublicKey {
   const [programDelegate] = PublicKey.findProgramAddressSync(
     [
       // Buffer.from('PROGRAM_DELEGATE') fails, so we use this workaround
       hexToUint8Array('50524f4752414d5f44454c4547415445'),
     ],
-    programId
+    getPublicKey(programId)
   );
   return programDelegate;
 }

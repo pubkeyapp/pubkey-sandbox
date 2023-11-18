@@ -1,4 +1,5 @@
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
+import { PublicKeyString } from './get-public-key';
 import { useGetTokenBalance } from './use-get-token-balance';
 
 export function SolanaGetTokenBalance({
@@ -6,7 +7,7 @@ export function SolanaGetTokenBalance({
   account,
 }: {
   connection: Connection;
-  account: PublicKey;
+  account: PublicKeyString;
 }) {
   const query = useGetTokenBalance({ connection, account });
 

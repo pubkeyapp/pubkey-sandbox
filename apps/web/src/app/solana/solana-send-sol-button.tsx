@@ -1,13 +1,13 @@
 import { Button, ButtonProps } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKeyString } from './get-public-key';
 import { SolanaTransferSolForm } from './solana-transfer-sol-form';
 
 export function SolanaSendSolButton({
   publicKey,
   ...props
-}: ButtonProps & { publicKey: PublicKey }) {
+}: ButtonProps & { publicKey: PublicKeyString }) {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
   return (

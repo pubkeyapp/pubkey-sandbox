@@ -1,7 +1,6 @@
 import { createTransferCheckedInstruction } from '@solana/spl-token';
 import {
   Connection,
-  PublicKey,
   TransactionMessage,
   TransactionSignature,
   VersionedTransaction,
@@ -9,6 +8,7 @@ import {
 import { UiExplorerLink } from '../ui/ui-explorer/ui-explorer-link';
 import { notifyError, notifySuccess } from '../ui/ui-notify/ui-notify';
 import { ellipsify } from './ellipsify';
+import { getPublicKey, PublicKeyString } from './get-public-key';
 
 export async function sendTokenTransaction({
   accountData,
@@ -19,7 +19,7 @@ export async function sendTokenTransaction({
   sendTransaction,
   tokenProgramId,
 }: {
-  account: PublicKey;
+  account: PublicKeyString;
   accountData: {
     info: {
       mint: string;
@@ -27,15 +27,15 @@ export async function sendTokenTransaction({
       tokenAmount: { decimals: number };
     };
   };
-  accountOwner: PublicKey;
-  destination: PublicKey;
+  accountOwner: PublicKeyString;
+  destination: PublicKeyString;
   amount: number;
   connection: Connection;
   sendTransaction: (
     transaction: VersionedTransaction,
     connection: Connection
   ) => Promise<TransactionSignature>;
-  tokenProgramId: PublicKey;
+  tokenProgramId: PublicKeyString;
 }) {
   let signature: TransactionSignature;
   const {
@@ -45,9 +45,12 @@ export async function sendTokenTransaction({
   } = accountData.info;
   try {
     const getTargetTokenAccount =
-      await connection.getParsedTokenAccountsByOwner(destination, {
-        mint: new PublicKey(mint),
-      });
+      await connection.getParsedTokenAccountsByOwner(
+        getPublicKey(destination),
+        {
+          mint: getPublicKey(mint),
+        }
+      );
 
     const firstAccount = getTargetTokenAccount.value.find(
       (item) => item.account.data.parsed.info.mint === mint.toString()
@@ -67,14 +70,14 @@ export async function sendTokenTransaction({
     // Create instructions to send, in this case a simple transfer
     const instructions = [
       createTransferCheckedInstruction(
-        account,
-        new PublicKey(mint),
+        getPublicKey(account),
+        getPublicKey(mint),
         firstAccount.pubkey,
-        new PublicKey(accountOwner),
+        getPublicKey(accountOwner),
         realAmount,
         decimals,
         [],
-        tokenProgramId
+        getPublicKey(tokenProgramId)
       ),
     ];
 
@@ -83,7 +86,7 @@ export async function sendTokenTransaction({
 
     // Create a new TransactionMessage with version and compile it to legacy
     const messageLegacy = new TransactionMessage({
-      payerKey: new PublicKey(accountOwner),
+      payerKey: getPublicKey(accountOwner),
       recentBlockhash: latestBlockhash.blockhash,
       instructions,
     }).compileToLegacyMessage();
@@ -105,7 +108,7 @@ export async function sendTokenTransaction({
     notifySuccess({
       message: (
         <UiExplorerLink label={ellipsify(signature)} path={`tx/${signature}`}>
-          Sent {amount} tokens to {ellipsify(destination.toBase58())}.
+          Sent {amount} tokens to {ellipsify(destination.toString())}.
         </UiExplorerLink>
       ),
     });

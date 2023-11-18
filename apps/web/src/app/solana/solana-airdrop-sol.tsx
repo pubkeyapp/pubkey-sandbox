@@ -1,14 +1,14 @@
 import { Button, ButtonProps } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
 import { useCluster } from '../cluster/cluster-provider';
+import { PublicKeyString } from './get-public-key';
 import { SolanaAirdropForm } from './solana-airdrop-form';
 
 export function SolanaAirdropSol({
   publicKey,
   ...props
-}: ButtonProps & { publicKey: PublicKey }) {
+}: ButtonProps & { publicKey: PublicKeyString }) {
   const { cluster } = useCluster();
   const { connection } = useConnection();
 

@@ -74,7 +74,7 @@ export function ProgramEpplexFeature({
       ) : (
         <Stack>
           {tokenAccountsQuery.data?.value.map((account) => (
-            <Card withBorder key={account.pubkey.toBase58()}>
+            <Card withBorder key={account.pubkey.toString()}>
               <UiDebug data={account} open />
             </Card>
           ))}
@@ -84,7 +84,7 @@ export function ProgramEpplexFeature({
 
       {accounts.data?.length ? (
         accounts.data.map((account) => (
-          <Card withBorder key={account.publicKey.toBase58()}>
+          <Card withBorder key={account.publicKey.toString()}>
             <UiDebug data={account} open />
           </Card>
         ))

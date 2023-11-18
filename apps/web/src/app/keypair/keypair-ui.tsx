@@ -1,4 +1,13 @@
-import { ActionIcon, Anchor, Button, Group, Menu, Table } from '@mantine/core';
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Code,
+  Group,
+  Menu,
+  Table,
+  UnstyledButton,
+} from '@mantine/core';
 import {
   IconArrowsLeftRight,
   IconCheck,
@@ -10,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { UiCopyButton } from '../ui/ui-explorer/ui-copy-button';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { useKeypair } from './keypair-provider';
+import { useState } from 'react';
 
 export function KeypairButtons() {
   const { generateKeypair, importKeypair } = useKeypair();
@@ -80,8 +90,6 @@ export function KeypairUiTable() {
         >
           {item.name}
         </Anchor>
-      </Table.Td>
-      <Table.Td>
         <Group>
           <UiExplorer
             path={`account/${item.publicKey}`}
@@ -92,7 +100,11 @@ export function KeypairUiTable() {
         </Group>
         {item.secret ? (
           <Group gap={4} c="dimmed" fz="xs">
-            Copy secret <UiCopyButton value={item.secret} />
+            <Group c="dimmed" fz="xs">
+              {item.type}
+            </Group>
+            <UiCopyButton value={item.secret} label={'Copy Secret'} />
+            <ShowSecret secret={item.secret} />
           </Group>
         ) : null}
       </Table.Td>
@@ -114,14 +126,24 @@ export function KeypairUiTable() {
 
   return (
     <Table>
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th>Name</Table.Th>
-          <Table.Th>Network/Endpoint</Table.Th>
-          <Table.Th />
-        </Table.Tr>
-      </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
     </Table>
+  );
+}
+
+export function ShowSecret({ secret }: { secret: string }) {
+  const [show, setShow] = useState(false);
+
+  return show ? (
+    <Group gap={4}>
+      <UnstyledButton onClick={() => setShow(false)} fz="xs">
+        Hide Secret
+      </UnstyledButton>
+      <Code>{secret}</Code>
+    </Group>
+  ) : (
+    <UnstyledButton onClick={() => setShow(true)} fz="xs">
+      Show Secret
+    </UnstyledButton>
   );
 }

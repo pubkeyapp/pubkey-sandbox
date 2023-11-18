@@ -1,5 +1,6 @@
-import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
+import { getPublicKey } from './get-public-key';
 
 export function useRequestAirdrop({ connection }: { connection: Connection }) {
   return useMutation({
@@ -12,7 +13,7 @@ export function useRequestAirdrop({ connection }: { connection: Connection }) {
       destination: string;
     }) =>
       connection.requestAirdrop(
-        new PublicKey(destination),
+        getPublicKey(destination),
         amount * LAMPORTS_PER_SOL
       ),
   });

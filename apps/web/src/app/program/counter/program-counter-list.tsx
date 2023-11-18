@@ -61,7 +61,7 @@ export function ProgramCounterList() {
       </Group>
       {fetchAllQuery.data?.length ? (
         fetchAllQuery.data.map((account) => (
-          <Card withBorder key={account.publicKey.toBase58()}>
+          <Card withBorder key={account.publicKey.toString()}>
             <CounterProgramAccountProvider account={account}>
               <ProgramCounterAccount />
             </CounterProgramAccountProvider>

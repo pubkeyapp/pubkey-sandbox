@@ -1,5 +1,6 @@
-import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
+import { Connection, VersionedTransaction } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
+import { PublicKeyString } from './get-public-key';
 
 import { sendTokenTransaction } from './send-token-transaction';
 
@@ -12,7 +13,7 @@ export function useTransferToken({
   tokenProgramId,
 }: {
   connection: Connection;
-  account: PublicKey;
+  account: PublicKeyString;
   accountData: {
     info: {
       mint: string;
@@ -20,12 +21,12 @@ export function useTransferToken({
       tokenAmount: { decimals: number };
     };
   };
-  accountOwner: PublicKey;
+  accountOwner: PublicKeyString;
   sendTransaction: (
     transaction: VersionedTransaction,
     connection: Connection
   ) => Promise<string>;
-  tokenProgramId: PublicKey;
+  tokenProgramId: PublicKeyString;
 }) {
   return useMutation({
     mutationKey: ['transfer-token'],
@@ -37,10 +38,10 @@ export function useTransferToken({
       destination: string;
     }) =>
       sendTokenTransaction({
-        account: new PublicKey(account.toString()),
+        account,
         accountData,
-        accountOwner: new PublicKey(accountOwner.toString()),
-        destination: new PublicKey(destination),
+        accountOwner,
+        destination,
         amount,
         connection,
         sendTransaction,

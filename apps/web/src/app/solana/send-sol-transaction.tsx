@@ -1,7 +1,6 @@
 import {
   Connection,
   LAMPORTS_PER_SOL,
-  PublicKey,
   SystemProgram,
   TransactionMessage,
   TransactionSignature,
@@ -10,6 +9,7 @@ import {
 import { UiExplorerLink } from '../ui/ui-explorer/ui-explorer-link';
 import { notifyError, notifySuccess } from '../ui/ui-notify/ui-notify';
 import { ellipsify } from './ellipsify';
+import { getPublicKey, PublicKeyString } from './get-public-key';
 
 export async function sendSolTransaction({
   publicKey,
@@ -18,8 +18,8 @@ export async function sendSolTransaction({
   connection,
   sendTransaction,
 }: {
-  publicKey: PublicKey;
-  destination: PublicKey;
+  publicKey: PublicKeyString;
+  destination: PublicKeyString;
   amount: number;
   connection: Connection;
   sendTransaction: (
@@ -32,8 +32,8 @@ export async function sendSolTransaction({
     // Create instructions to send, in this case a simple transfer
     const instructions = [
       SystemProgram.transfer({
-        fromPubkey: publicKey,
-        toPubkey: destination,
+        fromPubkey: getPublicKey(publicKey),
+        toPubkey: getPublicKey(destination),
         lamports: amount * LAMPORTS_PER_SOL,
       }),
     ];
@@ -43,7 +43,7 @@ export async function sendSolTransaction({
 
     // Create a new TransactionMessage with version and compile it to legacy
     const messageLegacy = new TransactionMessage({
-      payerKey: publicKey,
+      payerKey: getPublicKey(publicKey),
       recentBlockhash: latestBlockhash.blockhash,
       instructions,
     }).compileToLegacyMessage();
@@ -64,7 +64,7 @@ export async function sendSolTransaction({
     notifySuccess({
       message: (
         <UiExplorerLink label={ellipsify(signature)} path={`tx/${signature}`}>
-          Sent {amount} SOL to {ellipsify(destination.toBase58())}.
+          Sent {amount} SOL to {ellipsify(destination.toString())}.
         </UiExplorerLink>
       ),
     });

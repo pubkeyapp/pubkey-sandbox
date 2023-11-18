@@ -1,10 +1,11 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 import { useState } from 'react';
 import { useCluster } from '../cluster/cluster-provider';
 import { UiExplorerLink } from '../ui/ui-explorer/ui-explorer-link';
 import { notifySuccess } from '../ui/ui-notify/ui-notify';
 import { ellipsify } from './ellipsify';
+import { PublicKeyString } from './get-public-key';
 import { useGetBalance } from './use-get-balance';
 import { useRequestAirdrop } from './use-request-airdrop';
 
@@ -13,7 +14,7 @@ export function SolanaAirdropForm({
   publicKey,
 }: {
   connection: Connection;
-  publicKey: PublicKey;
+  publicKey: PublicKeyString;
 }) {
   const { cluster } = useCluster();
   const [amount, setAmount] = useState<number>(

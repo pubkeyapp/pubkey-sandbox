@@ -8,7 +8,6 @@ import {
   Title,
 } from '@mantine/core';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
 import { IconRefresh } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
@@ -16,6 +15,7 @@ import { UiDebugModal } from '../ui/ui-debug-modal/ui-debug-modal';
 import { UiCopyButton } from '../ui/ui-explorer/ui-copy-button';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { getAccountLabel } from './get-account-label';
+import { PublicKeyString } from './get-public-key';
 import { SolanaGetTokenBalance } from './solana-get-token-balance';
 import { SolanaSendTokenButton } from './solana-send-token-button';
 import { useGetTokenAccounts } from './use-get-token-accounts';
@@ -23,7 +23,7 @@ import { useGetTokenAccounts } from './use-get-token-accounts';
 export function SolanaGetTokenAccounts({
   publicKey,
 }: {
-  publicKey: PublicKey;
+  publicKey: PublicKeyString;
 }) {
   const { connection } = useConnection();
   const [showAll, setShowAll] = useState(false);

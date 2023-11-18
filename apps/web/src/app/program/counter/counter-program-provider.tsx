@@ -1,7 +1,7 @@
 import { Program } from '@coral-xyz/anchor';
 import { Counter, CounterIDL } from '@pubkey-sandbox/anchor';
-import { PublicKey } from '@solana/web3.js';
 import { createContext, ReactNode, useContext } from 'react';
+import { getPublicKey } from '../../solana/get-public-key';
 import { useAnchorProvider } from '../use-anchor-provider';
 import { ProgramMeta } from '../use-programs';
 
@@ -23,7 +23,7 @@ export function CounterProgramProvider({
   const provider = useAnchorProvider();
   const program = new Program(
     CounterIDL,
-    new PublicKey(programMeta.account),
+    getPublicKey(programMeta.account),
     provider
   );
 

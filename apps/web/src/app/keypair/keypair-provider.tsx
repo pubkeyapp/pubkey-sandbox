@@ -1,12 +1,34 @@
+import { base58 as bs58 } from '@scure/base';
 import { Keypair as SolanaKeypair } from '@solana/web3.js';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { createContext, ReactNode, useContext } from 'react';
+import { notifyError, notifySuccess } from '../ui/ui-notify/ui-notify';
+import { fromMnemonic, generateMnemonic, isMnemonic } from './keypair-mnemonic';
+
+export function secretToKeypair(secret: string): SolanaKeypair {
+  const clean = secret.trim();
+  if (!clean.includes(' ') && !clean.includes(',')) {
+    console.log('Imported base58 encoded string.');
+    return SolanaKeypair.fromSecretKey(bs58.decode(secret));
+  }
+  if (isMnemonic(secret)) {
+    console.log('Imported mnemonic.');
+    return fromMnemonic(secret);
+  }
+  try {
+    console.log('Imported byte array.');
+    return SolanaKeypair.fromSecretKey(Uint8Array.from(JSON.parse(secret)));
+  } catch (error) {
+    throw new Error('Invalid secret key.');
+  }
+}
 
 export interface Keypair {
   name: string;
   publicKey: string;
   secret?: string;
+  type?: string;
   active?: boolean;
 }
 
@@ -46,7 +68,6 @@ const activeKeypairAtom = atom<Keypair>((get) => {
 export interface KeypairProviderContext {
   keypair: Keypair;
   keypairs: Keypair[];
-  addKeypair: (keypair: Keypair) => void;
   deleteKeypair: (keypair: Keypair) => void;
   importKeypair: (url: string) => void;
   generateKeypair: () => void;
@@ -66,22 +87,38 @@ export function KeypairProvider({ children }: { children: ReactNode }) {
   const value: KeypairProviderContext = {
     keypair,
     keypairs: keypairs.sort((a, b) => a.name.localeCompare(b.name)),
-    addKeypair: (keypair: Keypair) => {
-      setKeypairs([...keypairs, keypair]);
-    },
     deleteKeypair: (keypair: Keypair) => {
       setKeypairs(keypairs.filter((item) => item.name !== keypair.name));
     },
-    setKeypair: (keypair: Keypair) => setKeypair(keypair),
+    setKeypair: (keypair: Keypair) => {
+      setKeypair(keypair);
+    },
     importKeypair: (secret: string) => {
-      console.log('secret', secret);
+      const kp = secretToKeypair(secret);
+      const keypair: Keypair = {
+        name: `${kp.publicKey.toString().slice(0, 4)}...`,
+        publicKey: kp.publicKey.toString(),
+        secret,
+        type: 'imported',
+      };
+      const exists = keypairs.find(
+        (item) => item.publicKey === keypair.publicKey
+      );
+      if (exists) {
+        notifyError({ message: `Key already exists!` });
+        return;
+      }
+      setKeypairs([...keypairs, keypair]);
+      notifySuccess({ message: `Key imported!` });
     },
     generateKeypair: () => {
-      const kp = SolanaKeypair.generate();
+      const mnemonic = generateMnemonic();
+      const kp = fromMnemonic(mnemonic);
       const keypair: Keypair = {
         name: `${kp.publicKey.toString().slice(0, 4)}`,
         publicKey: kp.publicKey.toString(),
-        secret: kp.secretKey.toString(),
+        secret: mnemonic,
+        type: 'generated',
       };
       setKeypairs([...keypairs, keypair]);
     },

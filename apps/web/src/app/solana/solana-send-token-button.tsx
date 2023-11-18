@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKeyString } from './get-public-key';
 import { SolanaTransferTokenForm } from './solana-transfer-token-form';
 
 export function SolanaSendTokenButton({
@@ -11,8 +11,8 @@ export function SolanaSendTokenButton({
   tokenProgramId,
   ...props
 }: ButtonProps & {
-  account: PublicKey;
-  accountOwner: PublicKey;
+  account: PublicKeyString;
+  accountOwner: PublicKeyString;
   accountData: {
     info: {
       mint: string;
@@ -20,7 +20,7 @@ export function SolanaSendTokenButton({
       tokenAmount: { decimals: number };
     };
   };
-  tokenProgramId: PublicKey;
+  tokenProgramId: PublicKeyString;
 }) {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();

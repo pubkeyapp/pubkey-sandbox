@@ -1,4 +1,5 @@
-import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { PublicKeyString } from './get-public-key';
 import { useGetBalance } from './use-get-balance';
 
 export function SolanaGetBalance({
@@ -6,7 +7,7 @@ export function SolanaGetBalance({
   publicKey,
 }: {
   connection: Connection;
-  publicKey: PublicKey;
+  publicKey: PublicKeyString;
 }) {
   const query = useGetBalance({ connection, publicKey });
 

@@ -8,19 +8,19 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { PublicKey } from '@solana/web3.js';
 import { IconRefresh } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { UiCopyButton } from '../ui/ui-explorer/ui-copy-button';
 import { UiExplorer } from '../ui/ui-explorer/ui-explorer';
 import { UiTime } from '../ui/ui-time/ui-time';
 import { ellipsify } from './ellipsify';
+import { PublicKeyString } from './get-public-key';
 import { useGetTransactionHistory } from './use-get-transaction-history';
 
 export function SolanaGetTransactionHistory({
   publicKey,
 }: {
-  publicKey: PublicKey;
+  publicKey: PublicKeyString;
 }) {
   const [showAll, setShowAll] = useState(false);
   const query = useGetTransactionHistory({ publicKey });

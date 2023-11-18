@@ -16,9 +16,9 @@ export function ProgramCounterAccount() {
       <Group justify="space-between">
         <Group gap={2}>
           <UiExplorer
-            label={ellipsify(account.publicKey.toBase58())}
+            label={ellipsify(account.publicKey.toString())}
             path={`account/${account.publicKey}`}
-            copyValue={account.publicKey.toBase58()}
+            copyValue={account.publicKey.toString()}
             copyLabel="Copy address"
           />
           <UiDebugModal data={account} />
